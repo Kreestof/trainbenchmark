@@ -8,6 +8,8 @@ layout: default
 
 ### Supplementary material for the submitted SOSYM paper
 
+Latest benchmark results:
+
 * [Benchmark results for the individual queries](results/results-individual-runtime.csv)
 * [Benchmark results for the query mixes (memory)](results/results-mix-memory.csv)
 * [Benchmark results for the query mixes (runtime)](results/results-mix-runtime.csv)

@@ -8,8 +8,29 @@ layout: default
 
 ### Supplementary material for the submitted SOSYM paper
 
-Latest benchmark results:
+#### Latest benchmark results
 
 * [Benchmark results for the individual queries](results/results-individual-runtime.csv)
 * [Benchmark results for the query mixes (memory)](results/results-mix-memory.csv)
 * [Benchmark results for the query mixes (runtime)](results/results-mix-runtime.csv)
+
+#### Plots
+
+* Batch scenario
+  * [Read phase](diagrams/runtime-Batch-Read.pdf)
+  * [Check phase](diagrams/runtime-Batch-Check.pdf)
+  * [Read and Check phase](diagrams/runtime-Batch-Read-and-Check.pdf)
+* Inject scenario
+  * [Read phase](diagrams/runtime-Inject-Read.pdf)
+  * [Check phase](diagrams/runtime-Inject-Check.pdf)
+  * [Read and Check phase](diagrams/runtime-Inject-Read-and-Check.pdf)
+  * [Transformation phase](diagrams/runtime-Inject-Transformation.pdf)
+  * [Recheck phase](diagrams/runtime-Inject-Recheck.pdf)
+  * [Transformation and Recheck phase](diagrams/runtime-Inject-Transformation-and-Recheck.pdf)
+* Repair scenario
+  * [Read phase](diagrams/runtime-Recheck-Read.pdf)
+  * [Check phase](diagrams/runtime-Recheck-Check.pdf)
+  * [Read and Check phase](diagrams/runtime-Recheck-Read-and-Check.pdf)
+  * [Transformation phase](diagrams/runtime-Recheck-Transformation.pdf)
+  * [Recheck phase](diagrams/runtime-Recheck-Recheck.pdf)
+  * [Transformation and Recheck phase](diagrams/runtime-Recheck-Transformation-and-Recheck.pdf)

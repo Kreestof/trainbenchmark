@@ -48,28 +48,11 @@ def tools = [
 ]
 
 def workloads = [
-	ConnectedSegments: [ modelVariant: "repair", operations: [RailwayOperation.CONNECTEDSEGMENTS], ],
-	PosLength:         [ modelVariant: "repair", operations: [RailwayOperation.POSLENGTH        ], ],
-	RouteSensor:       [ modelVariant: "repair", operations: [RailwayOperation.ROUTESENSOR      ], ],
-	SemaphoreNeighbor: [ modelVariant: "repair", operations: [RailwayOperation.SEMAPHORENEIGHBOR], ],
-	SwitchMonitored:   [ modelVariant: "repair", operations: [RailwayOperation.SWITCHMONITORED  ], ],
-	SwitchSet:         [ modelVariant: "repair", operations: [RailwayOperation.SWITCHSET        ], ],
-
 	Inject: [
 		modelVariant: "inject",
 		operations: [
-			RailwayOperation.CONNECTEDSEGMENTS,
-			RailwayOperation.POSLENGTH,
 			RailwayOperation.ROUTESENSOR,
-			RailwayOperation.SEMAPHORENEIGHBOR,
-			RailwayOperation.SWITCHSET,
-			RailwayOperation.SWITCHMONITORED,
-			RailwayOperation.CONNECTEDSEGMENTS_INJECT,
-			RailwayOperation.POSLENGTH_INJECT,
 			RailwayOperation.ROUTESENSOR_INJECT,
-			RailwayOperation.SEMAPHORENEIGHBOR_INJECT,
-			RailwayOperation.SWITCHSET_INJECT,
-			RailwayOperation.SWITCHMONITORED_INJECT,
 		],
 		strategy: TransformationChangeSetStrategy.FIXED,
 		constant: 10, // elements
@@ -78,12 +61,7 @@ def workloads = [
 	Repair: [
 		modelVariant: "repair",
 		operations: [
-			RailwayOperation.CONNECTEDSEGMENTS_REPAIR,
-			RailwayOperation.POSLENGTH_REPAIR,
 			RailwayOperation.ROUTESENSOR_REPAIR,
-			RailwayOperation.SEMAPHORENEIGHBOR_REPAIR,
-			RailwayOperation.SWITCHSET_REPAIR,
-			RailwayOperation.SWITCHMONITORED_REPAIR,
 		],
 		strategy: TransformationChangeSetStrategy.PROPORTIONAL,
 		constant: 5, // percent

@@ -94,8 +94,8 @@ for (workload in workloads) {
   xlabels = paste(xbreaks, "\n", currentWorkloadSizes, sep = "")
 
   # drop every other models size
-  evens = seq(2, log2(max(df$Model)), by=2)
-  xlabels[evens] = ""
+  #evens = seq(2, log2(max(df$Model)), by=2)
+  #xlabels[evens] = ""
 
   # y axis labels
   yaxis = nice_y_axis()
@@ -147,85 +147,3 @@ for (workload in workloads) {
     width = 210, height = 297, units = "mm"
   )
 }
-
-### heatmaps
-
-heatmap = function(df, attributes, map.from = NULL, map.to = NULL, levels, title, filename, width = 210, height = 100, ncol = 3, legend.position = "bottom") {
-  df$Model = discretize(
-    df$Model,
-    "fixed",
-    categories = c(-Inf, 16, 256, Inf),
-    labels = c("small", "medium", "large"))
-  
-  df$Time = discretize(
-    df$Time,
-    "fixed",
-    categories = c(-Inf, 200, 1000, 5000, Inf),
-    labels = c("instantaneous", "fast", "acceptable", "slow"))
-  
-  if (!is.null(map.from)) {
-    attribute = attributes[1];
-    df[[attribute]] = mapvalues(df[[attribute]], from = map.from, to = map.to, warn_missing = FALSE)
-  }
-  df[[attributes]] = factor(df[[attributes]], levels = levels)
-  
-  frequencies = as.data.frame(table(df[, c("Model", "Time", attributes)]))
-  total.frequencies = ddply(frequencies, attributes, summarize, Total = sum(Freq))
-  frequencies = merge(frequencies, total.frequencies)
-  frequencies$Freq = frequencies$Freq / frequencies$Total
-  
-  p = ggplot(na.omit(frequencies)) +
-    labs(title = title, x = "Model size", y = "Execution time") +
-    geom_tile(aes(x = Model, y = Time, fill = Freq)) +
-    scale_fill_gradient(low = "white", high = "darkred")
-  
-  if (length(attributes) == 1) {
-    p = p + facet_wrap(as.formula(paste("~" ,attributes[1])), ncol = ncol)
-  } else {
-    p = p + facet_grid(as.formula(paste(attributes[1], "~" ,attributes[2])))
-  }
-  
-  p = p +
-    theme_bw() +
-    theme(
-      plot.title = element_text(hjust = 0.5),
-      legend.key = element_blank(), 
-      legend.title = element_blank(), 
-      legend.position = legend.position,
-      axis.text.x = element_text(angle = 90, hjust = 1),
-      strip.text.x = element_text(size = 7),
-      strip.text.y = element_text(size = 7)
-    )
-  print(p)
-  
-  ggsave(file = paste("../diagrams/heatmap-", filename, ".pdf", sep = ""), width = width, height = height, units = "mm")
-}
-
-times.plot.read.and.check.only = subset(times.plot, Phase == "Read and Check")
-
-tools = read.csv("tools.csv", colClasses=c(rep("character",3)))
-
-# storage / read and check time
-heatmap(df = times.plot.read.and.check.only, 
-        attributes = c("Tool"),
-        map.from = tools$tool,
-        map.to = tools$storage,
-        levels = c("in-memory", "disk-resident"),
-        title = "Comparison of performance by storage\n(read and check)",
-        filename = "storage",
-        height = 74,
-        width = 106,
-        ncol = 2,
-        legend.position = "right")
-
-heatmap(df = times.plot, 
-        attributes = c("Tool"),
-        map.from = tools$tool,
-        map.to = tools$format,
-        levels = c("EMF", "property graph", "RDF", "SQL"),
-        title = "Comparison of performance by formats\n(total execution time)",
-        filename = "formats",
-        height = 115,
-        width = 108,
-        ncol = 2,
-        legend.position = "right")
